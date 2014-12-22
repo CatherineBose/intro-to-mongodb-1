@@ -25,9 +25,18 @@ Represents any string of UTF-8 characters.
 
 	> {"name" : "Tilak Thapa"}
 
-**_date_**
+**_date_** <br />
 Represents a date stored as milliseconds since the epoch.
 
 	> {"dob" : new Date()}
+	
+	> new Date()
+	ISODate("2014-12-22T09:57:30.801Z")
+	
+	> new ISODate()
+	ISODate("2014-12-22T09:57:35.021Z")
+
+
+	
 
 
