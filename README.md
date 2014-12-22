@@ -30,11 +30,15 @@ Represents a date stored as milliseconds since the epoch.
 
 	> {"dob" : new Date()}
 	
-	> new Date()
+	> Date() // returns current date as string.
+	Mon Dec 22 2014 15:58:22 GMT+0545 (Nepal Standard Time)
+	>
+	> new Date() // constructs a Date object using the ISODate() wrapper.
 	ISODate("2014-12-22T09:57:30.801Z")
-	
-	> new ISODate()
+	>
+	> new ISODate() // constructs a Date object.
 	ISODate("2014-12-22T09:57:35.021Z")
+	>
 
 
 	
