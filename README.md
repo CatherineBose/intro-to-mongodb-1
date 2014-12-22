@@ -2,26 +2,32 @@
 
 ## Data Types
 _null_ <br />
-represents a null value or non-existential value.
+Represents a null value or non-existent field.
 
 	> {"a" : null}
 _boolean_ <br />
-true or false.
+Represents true or false.
 
 	> {"a" : true}
 
 _Number_ <br />
+Shell defaults to using 64-bit floating point numbers.
 
 	> {"a" : 3.14}
-Shell defaults to using 64-bit floating point numbers.
+
 Use NumberInt (4 byte) or NumberLong (8 byte) integers.
 
 	> {"a" : NumberInt(10)}
 	> {"a" : NumberLong(10)}
 
 _String_ <br />
-Any string of UTF-8 characters.
+Represents any string of UTF-8 characters.
 
 	> {"name" : "Tilak Thapa"}
+
+_date_
+Represents a date stored as milliseconds since the epoch.
+
+	> {"dob" : new Date()}
 
 
