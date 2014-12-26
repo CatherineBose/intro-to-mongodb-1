@@ -145,18 +145,24 @@ MongoDB:
 	...    })
 
 
+## Limits, Skips, Sorts
+
+	> db.census.find().limit(3)
+	
+	// skips first 10 documents.
+	> db.census.find().skip(10)
+	
+	// skips first 10 documents and returns 3 documents after the 10th.
+	> db.census.find().skip(10).limit(3)
+	
+	// sorting order, asc = 1, desc = -1
+	> db.census.sort({district : 1, households : -1})
+
 ## Querying Arrays
 
 
 ## Querying Embedded Documents
 
-
-## Limits, Skips, Sorts
-
-	> db.census.find().limit(3)
-	> db.census.find().skip(10)
-	> db.census.find().skip(10).limit(3)
-	> db.census.sort({district : 1, households : -1})
 
 ## Indexing
 
