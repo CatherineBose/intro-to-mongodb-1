@@ -87,17 +87,22 @@ MongoDB:
 	> db.census.find({district : "Baglung"}, {_id : 0}).pretty()
 
 ### Query conditionals :
-$lt, $lte, $gt, $gte, $ne
+- $lt (<)
+- $lte (<=)
+- $gt (>)
+- $gte (>=)
+- $ne (!=)
 
 SQL:
 	SELECT * 
 	FROM   census 
 	WHERE  district = 'Kathmandu' 
-		   AND households BETWEEN 10000 AND 20000;
+		   AND households >= 10000 
+		   AND households <= 20000;
 
 MongoDB:
 
-	> db.census.find({district : "Kathmandu", households : {"$gte" : 1000, "$lte" : 2000}})
+	> db.census.find({district : "Kathmandu", households : {"$gte" : 10000, "$lte" : 20000}})
 
 ### OR Queries
 
