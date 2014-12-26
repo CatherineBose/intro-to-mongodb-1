@@ -162,11 +162,78 @@ MongoDB:
 
 
 ## Querying Embedded Documents
+Two ways :
+- querying for whole document
+- querying for individual key/value pairs inside an embedded docuement
+
+## Querying for whole document
+
+	> db.conflict.find({
+	...     "date-of-disappear": {
+	...         day: 20,
+	...         month: 11,
+	...         year: 2002
+	...     }
+	... }).pretty()
+	{
+			"_id" : ObjectId("5499243bc2e9fab12b22d3d7"),
+			"place-of-disappear" : {
+					"district" : "Doti",
+					"place" : "Dipayal"
+			},
+			"name" : "Bhoj Bahadur Mijar",
+			"date-of-birth" : {
+					"day" : 0,
+					"month" : 0,
+					"year" : 1972
+			},
+			"date-of-disappear" : {
+					"day" : 20,
+					"month" : 11,
+					"year" : 2002
+			},
+			"father-name" : "Bhaire Mijar",
+			"dead-or-missing" : "Death",
+			"gender" : "M",
+			"place-of-birth" : "Achham",
+			"district" : "Achham"
+	}
+	...
+	
+Note that a query for sub-document must exactly match the sub-document even changing the order of key/value pair does not work.
+
+	// this returns nothing
+	> db.conflict.find({
+	...     "date-of-disappear": {
+	...         month: 11,
+	...         year: 2002
+	...     }
+	... })
+	>
+	>
+	> db.conflict.find({
+	...     "date-of-disappear": {
+	...         month: 11,
+	...         year: 2002,
+	...         day: 20,
+	...     }
+	... })
+	>
 
 
 ## Indexing
 
 
 ## Aggregation
+Aggregation framework lets you transform and combine documents in a collectioin.
+
+### Pipeline Operations:
+- $match
+- $project
+- $group
+- $unwind
+- $sort
+- $limit
+- $skip
 
 ## Replication
