@@ -12,14 +12,16 @@
 
 ## Querying
 
-// find documents
-// SELECT * FROM census
-db.census.find()
+Find all documents.
 
-db.census.find().pretty()
+	SELECT * FROM census;
+	
+	> db.census.find()
+	> db.census.find().pretty() // pretty prints in shell
 
-// SELECT * FROM census WHERE district = 'Kathmandu'
-db.census.find({district : "Kathmandu"})
+	SELECT * FROM census WHERE district = 'Baglung' AND vdc = "Rayadanda";
+	
+	> db.census.find({district : "Kathmandu", vdc : "Rayadanda"})
 
 // specify which keys to return
 
