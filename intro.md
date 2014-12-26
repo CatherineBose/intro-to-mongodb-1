@@ -13,7 +13,6 @@
 ## Querying
 
 Find all documents.
-Syntax : db.<collection>.find(...)
 
 SQL:
 
@@ -45,7 +44,6 @@ MongoDB:
 	> db.census.find({district : "Kathmandu"}, {vdc : 1, households : 1}).pretty()
 	{
         "_id" : ObjectId("549c8963a1d633b04b55e7f3"),
-        "district" : "Kathmandu",
         "vdc" : "Gokarneswor",
         "households" : 1768
 	}
@@ -53,8 +51,7 @@ MongoDB:
 	Type "it" for more
 	
 	// note that _id key is returned by default.
-	// be explicit to prevent _id from being returned.
-	
+	// be explicit to prevent _id from being returned.	
 	> db.census.find({district : "Kathmandu"}, {_id : 0, vdc : 1, households : 1}).pretty()
 	{ "vdc" : "Gokarneswor", "households" : 1768 }
 	...
@@ -63,64 +60,49 @@ MongoDB:
 	// returns all keys except _id.
 	> db.census.find({district : "Kathmandu"}, {_id : 0}).pretty()
 
-/******************
-Query conditionals :
+### Query conditionals :
 $lt, $lte, $gt, $gte, $ne
-*/
-db.census.find({district : "Kathmandu", households : {"$gte" : 1000, "$lte" : 2000}}) // AND
 
-/*****************
-OR Queries
+SQL:
+	SELECT * 
+	FROM   census 
+	WHERE  district = 'Kathmandu' 
+		   AND households BETWEEN 10000 AND 20000;
+
+MongoDB:
+
+	> db.census.find({district : "Kathmandu", households : {"$gte" : 1000, "$lte" : 2000}})
+
+### OR Queries
+
 Two ways :
 1) $in, $nin - single key
 2) $or - multiple keys
-*/
 
-db.census.find({district : {"$in" : ["Baglung", "Kathmandu"]}})
-db.census.find({district : {"$nin" : ["Baglung", "Kathmandu"]}})
+	// $in, $nin
+	> db.census.find({district : {"$in" : ["Baglung", "Kathmandu"]}})
+	> db.census.find({district : {"$nin" : ["Baglung", "Kathmandu"]}})
 
-// $or
-db.census.find({district : {"$or" : {district : "Kathmandu", households : {"$gt" : 20000}}}})
-
-
-/*
-Querying Arrays
-
-*/
+	// $or
+	> db.census.find({district : {"$or" : {district : "Kathmandu", households : {"$gt" : 20000}}}})
 
 
-/*
-Querying Embedded Documents
-*/
+## Querying Arrays
 
 
-/*
-Limits, Skips, Sorts
-*/
-db.census.find().limit(3)
-db.census.find().skip(10)
-db.census.find().skip(10).limit(3)
-db.census.sort({district : 1, households : -1})
+## Querying Embedded Documents
 
 
-/*
-Indexing
-*/
+## Limits, Skips, Sorts
+
+	> db.census.find().limit(3)
+	> db.census.find().skip(10)
+	> db.census.find().skip(10).limit(3)
+	> db.census.sort({district : 1, households : -1})
+
+## Indexing
 
 
+## Aggregation
 
-
-/*
-Aggregation
-
-pipelining
-
-*/
-db.census.find({"$group", {_id : "$district", total_households : {"$sum" : "$households"}}})
-
-
-/*
-Replication
-
-*/
-
+## Replication
