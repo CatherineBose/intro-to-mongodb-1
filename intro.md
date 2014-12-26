@@ -15,21 +15,32 @@
 Find all documents.
 
 SQL:
+
 	SELECT * FROM census;
 	
 MongoDB:
+
 	> db.census.find()
 	> db.census.find().pretty() // pretty prints in shell
 
+SQL:
+
 	SELECT * FROM census WHERE district = 'Baglung' AND vdc = "Rayadanda";
+
+MongoDB:
 	
 	> db.census.find({district : "Kathmandu", vdc : "Rayadanda"})
 
-// specify which keys to return
+Specify which keys to return -
 
-// SELECT district, vdc, households FROM census WHERE district = 'Kathmandu'
-db.census.find({district : "Kathmandu"}, {district : 1, vdc : 1, households : 1})
-// note that _id key is returned by default
+SQL:
+
+	SELECT district, vdc, households FROM census WHERE district = 'Kathmandu'
+
+MongoDB:
+
+	db.census.find({district : "Kathmandu"}, {district : 1, vdc : 1, households : 1})
+	// note that _id key is returned by default
 
 db.census.find({district : "Kathmandu"}, {_id : 0, district : 1, vdc : 1, households : 1})
 db.census.find({district : "Kathmandu"}, {_id : 0}) // get all keys except _id
