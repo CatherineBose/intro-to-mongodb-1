@@ -13,6 +13,7 @@
 ## Querying
 
 Find all documents.
+Syntax : db.<collection>.find(...)
 
 SQL:
 
@@ -21,7 +22,9 @@ SQL:
 MongoDB:
 
 	> db.census.find()
-	> db.census.find().pretty() // pretty prints in shell
+	
+	// pretty prints in shell.
+	> db.census.find().pretty() 
 
 SQL:
 
@@ -35,15 +38,30 @@ Specify which keys to return -
 
 SQL:
 
-	SELECT district, vdc, households FROM census WHERE district = 'Kathmandu'
+	SELECT district, vdc, households FROM census WHERE district = 'Kathmandu';
 
 MongoDB:
 
-	db.census.find({district : "Kathmandu"}, {district : 1, vdc : 1, households : 1})
-	// note that _id key is returned by default
-
-db.census.find({district : "Kathmandu"}, {_id : 0, district : 1, vdc : 1, households : 1})
-db.census.find({district : "Kathmandu"}, {_id : 0}) // get all keys except _id
+	> db.census.find({district : "Kathmandu"}, {vdc : 1, households : 1}).pretty()
+	{
+        "_id" : ObjectId("549c8963a1d633b04b55e7f3"),
+        "district" : "Kathmandu",
+        "vdc" : "Gokarneswor",
+        "households" : 1768
+	}
+	...
+	Type "it" for more
+	
+	// note that _id key is returned by default.
+	// be explicit to prevent _id from being returned.
+	
+	> db.census.find({district : "Kathmandu"}, {_id : 0, vdc : 1, households : 1}).pretty()
+	{ "vdc" : "Gokarneswor", "households" : 1768 }
+	...
+	Type "it" for more
+	
+	// returns all keys except _id.
+	> db.census.find({district : "Kathmandu"}, {_id : 0}).pretty()
 
 /******************
 Query conditionals :
