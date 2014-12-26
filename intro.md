@@ -14,8 +14,10 @@
 
 Find all documents.
 
+SQL:
 	SELECT * FROM census;
 	
+MongoDB:
 	> db.census.find()
 	> db.census.find().pretty() // pretty prints in shell
 
