@@ -103,7 +103,13 @@ SQL:
 
 MongoDB:
 
-	> db.census.find({district : "Kathmandu", households : {"$gte" : 10000, "$lte" : 20000}})
+	> db.census.find({
+	...     district: "Kathmandu",
+	...     households: {
+	...         "$gte": 10000,
+	...         "$lte": 20000
+	...     }
+	... })
 
 ### OR Queries
 
@@ -133,7 +139,10 @@ SQL:
 MongoDB:		
 
 	// multiple keys - $or
-	> db.census.find({district : {"$or" : {district : "Kathmandu", households : {"$gt" : 20000}}}})
+	> db.census.find(
+	...   {"$or": [{district: "Kathmandu"},
+	...            {households: {"$gt": 20000}}]
+	...    })
 
 
 ## Querying Arrays
