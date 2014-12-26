@@ -202,14 +202,13 @@ Two ways :
 	
 Note that a query for sub-document must exactly match the sub-document even changing the order of key/value pair does not work.
 
-	// this returns nothing
+	// these queries returns nothing
 	> db.conflict.find({
 	...     "date-of-disappear": {
 	...         month: 11,
 	...         year: 2002
 	...     }
 	... })
-	>
 	>
 	> db.conflict.find({
 	...     "date-of-disappear": {
@@ -219,6 +218,37 @@ Note that a query for sub-document must exactly match the sub-document even chan
 	...     }
 	... })
 	>
+	
+If possible, it’s usually a good idea to query for just a specific key or keys of an embedded
+document. Then, if your schema changes, all of your queries won’t suddenly break
+because they’re no longer exact matches. You can query for embedded keys using dot-notation:
+
+	> db.conflict.find({"date-of-disappear.year" : 2002}).pretty()
+	...
+	{
+        "_id" : ObjectId("5499243bc2e9fab12b22d3f8"),
+        "place-of-disappear" : {
+                "district" : "Bardiya",
+                "place" : "Mahamadpur"
+        },
+        "name" : "Bali Ram Tharu",
+        "date-of-birth" : {
+                "day" : 0,
+                "month" : 0,
+                "year" : 1982
+        },
+        "date-of-disappear" : {
+                "day" : 24,
+                "month" : 6,
+                "year" : 2002
+        },
+        "father-name" : "Phattu Tharu",
+        "dead-or-missing" : "Death",
+        "gender" : "M",
+        "place-of-birth" : "Bardiya",
+        "district" : "Bardiya"
+	}
+	...
 
 
 ## Indexing
