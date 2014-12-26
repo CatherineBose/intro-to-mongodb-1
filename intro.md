@@ -326,4 +326,91 @@ MongoDB:
 
 ## Indexing
 
+	> db.census.getIndexes()
+	[
+			{
+					"v" : 1,
+					"key" : {
+							"_id" : 1
+					},
+					"ns" : "test.census",
+					"name" : "_id_"
+			}
+	]
+	>
+	
+Without indexing
+
+	> db.census.find({"vdc" : "Rayadanda"}).explain()
+	{
+			"cursor" : "BasicCursor",
+			"isMultiKey" : false,
+			"n" : 1,
+			"nscannedObjects" : 4048,
+			"nscanned" : 4048,
+			"nscannedObjectsAllPlans" : 4048,
+			"nscannedAllPlans" : 4048,
+			"scanAndOrder" : false,
+			"indexOnly" : false,
+			"nYields" : 0,
+			"nChunkSkips" : 0,
+			"millis" : 29,
+			"indexBounds" : {
+
+			},
+			"server" : "tmagar:27017"
+	}
+	>
+	
+Add index on "vdc" key
+
+	> db.census.ensureIndex({vdc : 1})
+	>
+	> db.census.find({"vdc" : "Rayadanda"}).explain()
+	{
+			"cursor" : "BtreeCursor vdc_1",
+			"isMultiKey" : false,
+			"n" : 1,
+			"nscannedObjects" : 1,
+			"nscanned" : 1,
+			"nscannedObjectsAllPlans" : 1,
+			"nscannedAllPlans" : 1,
+			"scanAndOrder" : false,
+			"indexOnly" : false,
+			"nYields" : 0,
+			"nChunkSkips" : 0,
+			"millis" : 0,
+			"indexBounds" : {
+					"vdc" : [
+							[
+									"Rayadanda",
+									"Rayadanda"
+							]
+					]
+			},
+			"server" : "tmagar:27017"
+	}
+	>
+	>
+	> db.census.getIndexes()
+	[
+			{
+					"v" : 1,
+					"key" : {
+							"_id" : 1
+					},
+					"ns" : "test.census",
+					"name" : "_id_"
+			},
+			{
+					"v" : 1,
+					"key" : {
+							"vdc" : 1
+					},
+					"ns" : "test.census",
+					"name" : "vdc_1"
+			}
+	]
+	>
+
 ## Replication
