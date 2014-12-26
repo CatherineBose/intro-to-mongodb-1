@@ -94,6 +94,7 @@ MongoDB:
 - $ne (!=)
 
 SQL:
+
 	SELECT * 
 	FROM   census 
 	WHERE  district = 'Kathmandu' 
@@ -107,8 +108,8 @@ MongoDB:
 ### OR Queries
 
 Two ways :
-1) $in, $nin - single key
-2) $or - multiple keys
+- Single key - $in, $nin
+- Multiple keys - $or
 
 	// $in, $nin
 	> db.census.find({district : {"$in" : ["Baglung", "Kathmandu"]}})
