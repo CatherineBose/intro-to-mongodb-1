@@ -164,10 +164,11 @@ MongoDB:
 ## Querying Embedded Documents
 Two ways :
 - querying for whole document
-- querying for individual key/value pairs inside an embedded docuement
+- querying for individual key/value pairs inside an embedded document.
 
-## Querying for whole document
+Collection used for examples - 
 
+	// Querying for whole document
 	> db.conflict.find({
 	...     "date-of-disappear": {
 	...         day: 20,
@@ -250,20 +251,90 @@ because they’re no longer exact matches. You can query for embedded keys using
 	}
 	...
 
+## Aggregation Framework
+### Aggregation pipeline
+
+Example:
+
+SQL:
+
+	SELECT * 
+	FROM   (SELECT district, 
+				   Sum(households) AS total_h, 
+				   Sum(male)       total_m, 
+				   Sum(female)     total_f 
+			FROM   census 
+			GROUP  BY district 
+			ORDER  BY Sum(households) DESC) 
+	WHERE  rownum <= 5
+	
+MongoDB:
+
+	> db.census.aggregate({
+	...         "$group": {
+	...             _id: "$district",
+	...             total_h: {
+	...                 "$sum": "$households"
+	...             },
+	...             total_m: {
+	...                 "$sum": "$male"
+	...             },
+	...             total_f: {
+	...                 "$sum": "$female"
+	...             }
+	...         }
+	...     }, {
+	...         "$sort": {
+	...             total_h: -1
+	...         }
+	...     }, {
+	...         "$limit": 5
+	...     }, {
+	...         "$project": {
+	...             _id: 0,
+	...             district: "$_id",
+	...             total_h: 1,
+	...             total_m: 1,
+	...             total_f: 1
+	...         }
+	...     })
+	{
+			"result" : [
+					{
+							"total_h" : 436344,
+							"total_m" : 913001,
+							"total_f" : 831239,
+							"district" : "Kathmandu"
+					},
+					{
+							"total_h" : 213997,
+							"total_m" : 466712,
+							"total_f" : 498658,
+							"district" : "Morang"
+					},
+					{
+							"total_h" : 184552,
+							"total_m" : 385096,
+							"total_f" : 427554,
+							"district" : "Jhapa"
+					},
+					{
+							"total_h" : 163916,
+							"total_m" : 432193,
+							"total_f" : 448003,
+							"district" : "Rupandehi"
+					},
+					{
+							"total_h" : 162407,
+							"total_m" : 371229,
+							"total_f" : 392258,
+							"district" : "Sunsari"
+					}
+			],
+			"ok" : 1
+	}
+	>
 
 ## Indexing
-
-
-## Aggregation
-Aggregation framework lets you transform and combine documents in a collectioin.
-
-### Pipeline Operations:
-- $match
-- $project
-- $group
-- $unwind
-- $sort
-- $limit
-- $skip
 
 ## Replication
