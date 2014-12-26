@@ -21,9 +21,23 @@ SQL:
 MongoDB:
 
 	> db.census.find()
+	{ "_id" : ObjectId("549c8963a1d633b04b55e1b1"), "district" : "Taplejung", "vdc" : "Liwang", "households" : 359, "male" : 810, "female" : 943 }
+	{ "_id" : ObjectId("549c8963a1d633b04b55e1b2"), "district" : "Taplejung", "vdc" : "Mamangkhe", "households" : 240, "male" : 519, "female" : 616 }
+	...
+	Type "it" for more
 	
 	// pretty prints in shell.
-	> db.census.find().pretty() 
+	> db.census.find().pretty()
+	{
+        "_id" : ObjectId("549c8963a1d633b04b55e1b2"),
+        "district" : "Taplejung",
+        "vdc" : "Mamangkhe",
+        "households" : 240,
+        "male" : 519,
+        "female" : 616
+	}
+	...
+	Type "it" for more
 
 SQL:
 
@@ -31,34 +45,46 @@ SQL:
 
 MongoDB:
 	
-	> db.census.find({district : "Kathmandu", vdc : "Rayadanda"})
+	> 
+	{
+        "_id" : ObjectId("549c8963a1d633b04b55ebde"),
+        "district" : "Baglung",
+        "vdc" : "Rayadanda",
+        "households" : 549,
+        "male" : 1008,
+        "female" : 1321
+	}
+	>
 
 Specify which keys to return -
 
 SQL:
 
-	SELECT district, vdc, households FROM census WHERE district = 'Kathmandu';
+	SELECT vdc, households FROM census WHERE district = 'Baglung';
 
 MongoDB:
 
-	> db.census.find({district : "Kathmandu"}, {vdc : 1, households : 1}).pretty()
+	> db.census.find({district : "Baglung"}, {vdc : 1, households : 1})
 	{
-        "_id" : ObjectId("549c8963a1d633b04b55e7f3"),
-        "vdc" : "Gokarneswor",
-        "households" : 1768
+        "_id" : ObjectId("549c8963a1d633b04b55ebc2"),
+        "vdc" : "Devisthan",
+        "households" : 1616
 	}
 	...
 	Type "it" for more
+	>
 	
 	// note that _id key is returned by default.
 	// be explicit to prevent _id from being returned.	
-	> db.census.find({district : "Kathmandu"}, {_id : 0, vdc : 1, households : 1}).pretty()
-	{ "vdc" : "Gokarneswor", "households" : 1768 }
+	> db.census.find({district : "Baglung"}, {_id : 0, vdc : 1, households : 1}).pretty()
+	{ "vdc" : "Darling", "households" : 1156 }
+	{ "vdc" : "Devisthan", "households" : 1616 }
 	...
 	Type "it" for more
+	>
 	
 	// returns all keys except _id.
-	> db.census.find({district : "Kathmandu"}, {_id : 0}).pretty()
+	> db.census.find({district : "Baglung"}, {_id : 0}).pretty()
 
 ### Query conditionals :
 $lt, $lte, $gt, $gte, $ne
