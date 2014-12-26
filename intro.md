@@ -270,34 +270,23 @@ SQL:
 	
 MongoDB:
 
-	> db.census.aggregate({
-	...         "$group": {
-	...             _id: "$district",
-	...             total_h: {
-	...                 "$sum": "$households"
-	...             },
-	...             total_m: {
-	...                 "$sum": "$male"
-	...             },
-	...             total_f: {
-	...                 "$sum": "$female"
-	...             }
-	...         }
-	...     }, {
-	...         "$sort": {
-	...             total_h: -1
-	...         }
-	...     }, {
-	...         "$limit": 5
-	...     }, {
-	...         "$project": {
-	...             _id: 0,
-	...             district: "$_id",
-	...             total_h: 1,
-	...             total_m: 1,
-	...             total_f: 1
-	...         }
-	...     })
+	> db.census.aggregate(
+	... {"$group": {
+	...         _id: "$district",
+	...         total_h: {"$sum": "$households"},
+	...         total_m: {"$sum": "$male"},
+	...         total_f: {"$sum": "$female"}}
+	... },
+	... {"$sort": {total_h: -1}},
+	... {"$limit": 5},
+	... {"$project": {
+	...         _id: 0,
+	...         district: "$_id",
+	...         total_h: 1,
+	...         total_m: 1,
+	...         total_f: 1
+	...     }})
+	
 	{
 			"result" : [
 					{
