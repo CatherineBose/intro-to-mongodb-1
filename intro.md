@@ -111,11 +111,28 @@ Two ways :
 - Single key - $in, $nin
 - Multiple keys - $or
 
-	// $in, $nin
+SQL:
+
+	SELECT * 
+	FROM   census 
+	WHERE  district IN ( 'Baglung', 'Kathmandu' ); 
+	
+MongoDB:
+
+	// single key - $in, $nin
 	> db.census.find({district : {"$in" : ["Baglung", "Kathmandu"]}})
 	> db.census.find({district : {"$nin" : ["Baglung", "Kathmandu"]}})
 
-	// $or
+SQL:
+
+	SELECT * 
+	FROM   census 
+	WHERE  district IN ( 'Baglung', 'Kathmandu' ) 
+			OR households > 20000;
+
+MongoDB:		
+
+	// multiple keys - $or
 	> db.census.find({district : {"$or" : {district : "Kathmandu", households : {"$gt" : 20000}}}})
 
 
